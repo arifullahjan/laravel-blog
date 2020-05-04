@@ -11,4 +11,6 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api'], function() {
     Route::get('/users', 'ListingController@users')->middleware('admin');
 
     Route::resource('/posts', 'PostController', ['only' => ['index', 'show']]);
+
+
 });

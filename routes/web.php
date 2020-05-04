@@ -14,12 +14,18 @@
 Route::get('/', 'BlogController@index');
 Route::get('/posts/{post}', 'BlogController@post');
 Route::post('/posts/{post}/comment', 'BlogController@comment')->middleware('auth');
-
+Route::get('/ajax', 'AjaxController@ajax')->middleware('auth');
+Route::post('/ajax', 'AjaxController@ajaxPost')->middleware('auth');
+Route::post('/ajax-refresh', 'AjaxController@ajaxRefreshToken')->middleware('auth');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'auth'], function() {
+Route::group([
+    'prefix' => 'admin',
+    'namespace' => 'Admin',
+    'middleware' => 'auth'
+], function () {
     Route::resource('/posts', 'PostController');
     Route::put('/posts/{post}/publish', 'PostController@publish')->middleware('admin');
     Route::resource('/categories', 'CategoryController', ['except' => ['show']]);
